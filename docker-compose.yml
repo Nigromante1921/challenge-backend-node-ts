@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  mongo-accounts:
+    image: mongo:6.0
+    container_name: mongo-accounts
+    restart: unless-stopped
+    environment:
+      # Crea de forma inicial la base eiAccounts
+      MONGO_INITDB_DATABASE: eiAccounts
+    volumes:
+      - mongo-accounts-data:/data/db
+    ports:
+      - "27017:27017"     # Expone la cuenta en el puerto 27017
+
+  mongo-business:
+    image: mongo:6.0
+    container_name: mongo-business
+    restart: unless-stopped
+    environment:
+      # Crea de forma inicial la base eiBusiness
+      MONGO_INITDB_DATABASE: eiBusiness
+    volumes:
+      - mongo-business-data:/data/db
+    ports:
+      - "27018:27017"     # Expone la cuenta en el puerto 27018
+
+volumes:
+  mongo-accounts-data:
+  mongo-business-data:

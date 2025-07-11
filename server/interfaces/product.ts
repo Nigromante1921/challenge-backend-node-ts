@@ -1,7 +1,10 @@
+import { Types } from "mongoose";
+
 export interface IProduct {
-  _id?: string;
   name: string;
   sku: string;
-  createdAt?: string;
-  updatedAt?: string;
+  stock: number;
+  accountId: Types.ObjectId;
+  createdAt?: Date;
+  updatedAt?: Date;
 }

@@ -1,17 +1,24 @@
-import { Schema } from "mongoose";
-
+import { Schema, Document } from "mongoose";
 import { IAccount } from "../interfaces/account";
-
 import { cnxAccounts } from "../db/mongodb";
 
-const accountsSchema = new Schema<IAccount>(
-  {
-    name: { type: String },
-    email: { type: String },
-  },
-  { timestamps: true }
+interface AccountDoc extends IAccount, Document {}
+
+const accountsSchema = new Schema<AccountDoc>(
+    {
+        name:  { type: String, required: true },
+        email: { type: String, required: true, unique: true }
+    },
+    {
+        timestamps: true,
+        collection: "accounts"
+    }
 );
 
-const Accounts = cnxAccounts.model<IAccount>("Accounts", accountsSchema);
 
-export default Accounts;
+accountsSchema.index({ email: 1 }, { unique: true });
+
+export const AccountsModel = cnxAccounts.model<AccountDoc>(
+    "Account",
+    accountsSchema
+);

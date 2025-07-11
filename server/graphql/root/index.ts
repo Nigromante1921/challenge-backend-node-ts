@@ -1,36 +1,39 @@
 import { gql } from "apollo-server-express";
+import { mergeTypeDefs, mergeResolvers } from "@graphql-tools/merge";
 
 import {
-  schema as accountsSchema,
-  queries as accountsQueries,
-  mutations as accountsMutations,
+  accountSchema,
+  accountResolvers,
+  accountMutations,
 } from "../accounts";
-
 import {
-  schema as productsSchema,
-  queries as productsQueries,
-  mutations as productsMutations,
+  productSchema,
+  productResolvers,
+  productMutations,
 } from "../products";
 
+// Paso 1: definimos los tipos raíz vacíos
 const rootTypeDefs = gql`
   type Query {
-    _: String
+    _empty: String
   }
 
   type Mutation {
-    _: String
+    _empty: String
   }
 `;
 
-export const typeDefs = [rootTypeDefs, accountsSchema, productsSchema];
+// Paso 2: merge de todos los typeDefs (incluyendo ese root vacío).
+export const typeDefs = mergeTypeDefs([
+  rootTypeDefs,
+  accountSchema,
+  productSchema,
+]);
 
-export const resolvers: any = {
-  Query: {
-    ...accountsQueries,
-    ...productsQueries,
-  },
-  Mutation: {
-    ...accountsMutations,
-    ...productsMutations,
-  },
-};
+// Paso 3: merge de todos los resolvers
+export const resolvers = mergeResolvers([
+  accountResolvers,
+  accountMutations,
+  productResolvers,
+  productMutations,
+]);

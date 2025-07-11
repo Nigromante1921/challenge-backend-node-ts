@@ -1,3 +1,9 @@
-export { schema } from "./schema";
-export { queries } from "./queries";
-export { mutations } from "./mutations";
+import { schema as accountSchema } from "./schema";
+import accountResolvers from "./queries";
+import accountMutations from "./mutations";
+
+export {
+    accountSchema,
+    accountResolvers,
+    accountMutations,
+};

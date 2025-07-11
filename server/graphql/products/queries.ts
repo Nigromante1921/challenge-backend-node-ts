@@ -1,8 +1,16 @@
-import Products from "../../models/products";
+import { IResolvers } from "@graphql-tools/utils";
+import { ProductService } from "../../services/product.service";
 
-export const queries = {
-  testProdQ: async (_: any) => {
-    const products = await Products.find({});
-    return products.length;
+const svc = new ProductService();
+
+const ProductQueries: IResolvers = {
+  Query: {
+    product: (_, { id }) =>
+        svc.getById(id),
+
+    productsByAccount: (_, { accountId, page, limit }) =>
+        svc.listByAccount(accountId, page, limit),
   },
 };
+
+export default ProductQueries;
