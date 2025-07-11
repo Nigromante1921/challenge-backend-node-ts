@@ -12,7 +12,11 @@ import {
   productMutations,
 } from "../products";
 
-// Paso 1: definimos los tipos raíz vacíos
+import {
+  odooSchema, odooResolvers, odooMutations
+} from '../odoo';
+
+
 const rootTypeDefs = gql`
   type Query {
     _empty: String
@@ -23,17 +27,20 @@ const rootTypeDefs = gql`
   }
 `;
 
-// Paso 2: merge de todos los typeDefs (incluyendo ese root vacío).
+
 export const typeDefs = mergeTypeDefs([
   rootTypeDefs,
   accountSchema,
   productSchema,
+  odooSchema,
 ]);
 
-// Paso 3: merge de todos los resolvers
+
 export const resolvers = mergeResolvers([
   accountResolvers,
   accountMutations,
   productResolvers,
   productMutations,
+  odooResolvers,
+  odooMutations,
 ]);
