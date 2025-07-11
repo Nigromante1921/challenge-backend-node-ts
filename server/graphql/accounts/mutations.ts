@@ -5,7 +5,12 @@ const svc = new AccountService();
 
 const AccountMutations: IResolvers = {
   Mutation: {
-    createAccount: async (_, { input }) => svc.create(input),
+    createAccount: async (_parent, { input }, { logger }) => {
+      logger.info({ input }, 'createAccount called');
+      const account = await svc.create(input);
+      logger.info({ accountId: "id" }, 'Account created');
+      return account;
+    },
   },
 };
 

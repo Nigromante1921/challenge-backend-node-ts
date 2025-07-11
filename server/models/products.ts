@@ -7,7 +7,7 @@ interface ProductDoc extends IProduct, Document {}
 const productSchema = new Schema<ProductDoc>(
     {
         name:      { type: String, required: true },
-        sku:       { type: String, required: true, unique: true },
+        sku:       { type: String, required: true },
         stock:     { type: Number, required: true, min: 0 },
         accountId: { type: Schema.Types.ObjectId, ref: "Account", required: true },
     },

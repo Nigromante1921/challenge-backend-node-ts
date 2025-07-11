@@ -7,7 +7,7 @@ interface AccountDoc extends IAccount, Document {}
 const accountsSchema = new Schema<AccountDoc>(
     {
         name:  { type: String, required: true },
-        email: { type: String, required: true, unique: true }
+        email: { type: String, required: true }
     },
     {
         timestamps: true,
